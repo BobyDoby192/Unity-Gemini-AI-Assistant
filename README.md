@@ -1,65 +1,67 @@
+*[ [Русский](README.ru.md) ] | [ English ]*
+
 # 🤖 Unity Gemini AI Assistant (Bridge)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Unity: 2020.3+](https://img.shields.io/badge/Unity-2020.3%2B-black.svg)](https://unity.com/)
 
-**Unity Gemini AI Assistant** — это легковесный Editor-плагин, который превращает облачную нейросеть Google Gemini в вашего личного архитектурного ревьюера прямо внутри Unity. 
+**Unity Gemini AI Assistant** is a lightweight Editor plugin that turns Google's Gemini cloud LLM into your personal architectural reviewer directly inside Unity.
 
-Плагин решает главную боль разработчика при масштабировании проекта: **вам больше не нужно вручную копировать простыни кода и переписывать свойства объектов из Инспектора**, чтобы задать вопрос нейросети. Инструмент собирает весь локальный контекст сцены за один клик.
-
----
-
-## ✨ Ключевые возможности
-
-* 🔍 **Глубокий парсинг Инспектора:** Автоматически считывает выделенный `GameObject`, его теги, слои, иерархию и публичные значения всех прикрепленных компонентов.
-* 📜 **Авто-подтяжка кода:** Находит на жестком диске `.cs` файлы скриптов, висящих на объекте, и вшивает их исходный код в запрос.
-* ⚡ **Работа «из коробки»:** Написан на чистом C# (`UnityEngine.Networking`). **Не требует** установки Python, Node.js или сторонних библиотек (вроде Newtonsoft.Json).
-* 🔄 **Умная синхронизация моделей:** Умеет опрашивать серверы Google и подтягивать актуальный список нейросетей, доступных конкретно вашему API-ключу.
-* 📋 **Гибридный экспорт (Clipboard Bridge):** Позволяет за секунду собрать Markdown-слепок объекта и скопировать его в буфер обмена для работы в веб-версиях тяжелых LLM (Gemini Advanced, ChatGPT, Claude).
+This plugin solves the biggest pain point of scaling a Unity project: **you no longer need to manually copy-paste massive walls of code or transcribe Inspector properties** to ask an AI a question. The tool packages your local scene context in a single click.
 
 ---
 
-## 📦 Установка за 30 секунд
+## ✨ Key Features
 
-1. Скачайте файл `GeminiAssistantWindow.cs` из этого репозитория.
-2. Перенесите его в свой Unity-проект в любую папку с именем **`Editor`** (например: `Assets/Editor/GeminiAssistantWindow.cs`).
-3. В верхнем меню Unity нажмите: **`Tools`** -> **`AI Assistant`**.
-
----
-
-## ⚙️ Обзор интерфейса и настроек
-
-Окно плагина разделено на 4 функциональных блока:
-
-### Блок 1: Настройки ИИ (AI Settings)
-* **API Key** — поле для вашего секретного ключа доступа. Получить его можно **бесплатно** за 1 минуту на сайте [Google AI Studio](https://aistudio.google.com/). *(Ключ живет только в вашей локальной сессии, в код проекта он не сохраняется)*.
-* **Модель ИИ** — выпадающий список выбора «мозгов»:
-  * `gemini-1.5-flash` — молниеносная модель для быстрых вопросов по логике (огромные бесплатные лимиты).
-  * `gemini-1.5-pro` — тяжелая аналитическая модель для проектирования систем.
-* **Кнопка [ Загрузить с сервера ]** — нажмите её один раз при первом запуске. Плагин свяжется с Google и выведет в список только те модели, которые 100% работают в вашем регионе без ошибки `404 Not Found`.
-
-### Блок 2: Автоматический контекст (Context Automation)
-* **[x] Анализировать выделенный объект** — если включено, плагин "слушает" окно *Hierarchy*. Кликните на любого врага, NPC или менеджер на сцене, и ИИ мгновенно увидит его состав.
-* **[x] Считывать код его скриптов** — если на выделенном объекте висит ваш скрипт `QuestManager.cs`, плагин сам найдет этот файл в проекте и прикрепит его текст к вопросу.
-
-### Блок 3: Промпт (User Request)
-Поле, куда вы пишете свой вопрос человеческим языком. Например:
-> *"Посмотри на этот объект. Почему логика спавна монет может выдавать NullReferenceException при перезапуске сцены?"*
-
-### Блок 4: Режимы отправки (Action Buttons)
-
-1. **`[ Собрать контекст и спросить ИИ ]`**  
-   Отправляет данные по API. Через 3–5 секунд в нижнем окне Unity появляется подробный ответ с подсветкой синтаксиса.
-2. **`[ Скопировать контекст объекта для чата ]`**  
-   *Киллер-фича для обладателей веб-подписок Pro/Advanced.* Кнопка не тратит ваши API-лимиты. Она берет всю собранную "паутину" объекта, упаковывает в идеальный Markdown-формат и кладет в буфер обмена (`Ctrl+C`). Вам остается открыть браузер и нажать `Ctrl+V` в диалоге с ИИ.
+* 🔍 **Deep Inspector Parsing:** Automatically scans the selected `GameObject`, its tags, layers, hierarchy, and public/serialized values of all attached components.
+* 📜 **Automatic Code Ingestion:** Finds the `.cs` files of the scripts attached to the object on your hard drive and injects their raw code into the prompt.
+* ⚡ **Zero-Setup / Out-of-the-box:** Written in pure C# (`UnityEngine.Networking`). **No need** to install Python, Node.js, or third-party JSON libraries (like Newtonsoft.Json).
+* 🔄 **Smart Model Sync:** Fetches the actual, live list of Gemini models available specifically to your API key directly from Google servers.
+* 📋 **Hybrid Export (Clipboard Bridge):** Instantly builds a clean Markdown snapshot of your object and copies it to your clipboard (`Ctrl+C`) for use in the web versions of heavy LLMs (Gemini Advanced, ChatGPT, Claude).
 
 ---
 
-## 🛡️ Безопасность (Важно!)
+## 📦 30-Second Installation
 
-Если вы решите форкнуть этот код или развивать его под себя, **никогда не вписывайте свой API-ключ в строку `private string apiKey = ""` внутри C#-файла**, если планируете пушить проект в публичный репозиторий. Боты GitHub находят открытые ключи в течение нескольких минут.
+1. Download the `GeminiAssistantWindow.cs` file from this repository.
+2. Place it anywhere inside your Unity project inside a folder named **`Editor`** (e.g., `Assets/Editor/GeminiAssistantWindow.cs`).
+3. In Unity's top menu, click: **`Tools`** -> **`AI Assistant`**.
 
 ---
 
-*Разработано соло-инженером в паре с Gemini 1.5 Pro.*  
-**Буду рад вашим Pull Requests и звездочкам репозиторию! ⭐**
+## ⚙️ Interface & Settings Overview
+
+The plugin window is divided into 4 functional blocks:
+
+### Block 1: AI Settings
+* **API Key** — your secret access token. You can get a **free** key in 1 minute at [Google AI Studio](https://aistudio.google.com/). *(The key lives only in your local session and is never saved into your project's code)*.
+* **AI Model** — dropdown to select the "brain":
+  * `gemini-1.5-flash` — lightning-fast model for quick logic questions (generous free-tier limits).
+  * `gemini-1.5-pro` — heavy reasoning model for complex system design.
+* **[ Fetch Available Models ] button** — click this once on your first run. The plugin will ping Google and populate the dropdown with only the models that are 100% supported in your tier/region, eliminating `404 Not Found` errors.
+
+### Block 2: Context Automation
+* **[x] Analyze Selected Object** — when enabled, the plugin listens to the *Hierarchy* window. Click on any enemy, NPC, or Game Manager on the scene, and the AI will instantly read its composition.
+* **[x] Read Attached Scripts Code** — if a `QuestManager.cs` script is attached to the selected object, the plugin will locate the `.cs` file in your project and append its raw source code to the request.
+
+### Block 3: User Request
+The text area where you type your question in plain English. For example:
+> *"Take a look at this object. Why would the coin spawn logic throw a NullReferenceException when reloading the scene?"*
+
+### Block 4: Action Buttons
+
+1. **`[ Collect Context & Ask AI ]`**  
+   Sends the request via the API. Within 3–5 seconds, a detailed answer with syntax highlighting appears in the bottom text area.
+2. **`[ Copy Object Context for Chat ]`**  
+   *The killer feature for Web Pro/Advanced tier subscribers.* This button costs zero API tokens. It grabs the object's entire "web of context", wraps it in clean Markdown, and sends it to your system clipboard (`Ctrl+C`). Just open your browser and hit `Ctrl+V` in your favorite AI chat.
+
+---
+
+## 🛡️ Security Warning
+
+If you fork or modify this code, **never paste your actual API key into the `private string apiKey = ""` default value** if you plan to push your changes to a public repository. GitHub scrapers will find exposed API keys in minutes.
+
+---
+
+*Developed by a solo engineer paired with Gemini 1.5 Pro.*  
+**Pull Requests and repository stars ⭐ are highly appreciated!**
