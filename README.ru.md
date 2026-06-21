@@ -1,3 +1,4 @@
+*[ [English](README.md) ] | [ Русский ]*
 # 🤖 Unity Gemini AI Assistant (Bridge)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
