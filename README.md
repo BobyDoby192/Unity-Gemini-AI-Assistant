@@ -63,5 +63,5 @@ If you fork or modify this code, **never paste your actual API key into the `pri
 
 ---
 
-*Developed by a solo engineer paired with Gemini 1.5 Pro.*  
+*Developed by a solo engineer*  
 **Pull Requests and repository stars ⭐ are highly appreciated!**
